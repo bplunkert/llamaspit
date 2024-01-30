@@ -55,7 +55,8 @@ docker compose run llamaspit --help
 ## Testing
 
 To run the tests, execute the following command on your terminal:
-```go test
+```
+go test
 ```
 
 To run the tests with Docker Compose, execute the following command on your terminal:
