@@ -2,5 +2,6 @@ version: '3.8'
 services:
   llamaspit:
     build: .
+    image: "llamaspit:${GIT_COMMIT}"
     environment:
       - OLLAMA_HOST=${OLLAMA_HOST}
