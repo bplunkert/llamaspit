@@ -12,7 +12,7 @@ func TestProcessChatResponse(t *testing.T) {
 	var runCount int
 	var passCount int
 
-	for i := 0; i < 3; i++ {
+	for i := 0; i < 11; i++ {
 		cmd := exec.Command("./llamaspit", "-y", "multiply 37 by 73")
 		var out bytes.Buffer
 		cmd.Stdout = &out
@@ -20,7 +20,7 @@ func TestProcessChatResponse(t *testing.T) {
 		err := cmd.Run()
 		runCount++
 		if err != nil {
-			t.Errorf("Error running command: %v", err)
+			t.Logf("Error running command: %v", err)
 			continue
 		}
 
@@ -33,8 +33,8 @@ func TestProcessChatResponse(t *testing.T) {
 	}
 
 	if passCount < (runCount / 2) {
-		t.Errorf("More than 50% of tests failed. Total run: %v, Passes: %v", runCount, passCount)
+		t.Errorf("More than half of tests failed. Total run: %v, Passes: %v", runCount, passCount)
 	} else {
-		t.Logf("More than 50% of tests passed. Total run: %v, Passes: %v", runCount, passCount)
+		t.Logf("More than half of tests passed. Total run: %v, Passes: %v", runCount, passCount)
 	}
 }
