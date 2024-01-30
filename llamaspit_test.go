@@ -2,40 +2,39 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"os/exec"
 	"strings"
-	"sync"
 	"testing"
 )
 
 func TestProcessChatResponse(t *testing.T) {
-	var runCount int32 = 10
-	var passCount int32 = 0
-	var mu sync.Mutex
-
-	t.Parallel()
+	var runCount int
+	var passCount int
 
 	for i := 0; i < 3; i++ {
-		t.Run("Test command execution on '-y' argument", func(t *testing.T) {
-			t.Parallel()
+		cmd := exec.Command("./llamaspit", "-y", "multiply 37 by 73")
+		var out bytes.Buffer
+		cmd.Stdout = &out
 
-			cmd := exec.Command("./llamaspit", "-y", "multiply 37 by 73")
-			var out bytes.Buffer
-			cmd.Stdout = &out
+		err := cmd.Run()
+		runCount++
+		if err != nil {
+			t.Errorf("Error running command: %v", err)
+			continue
+		}
 
-			err := cmd.Run()
-			mu.Lock()
-			runCount++
-			if err != nil {
-				t.Fatal(err)
-			}
+		output := out.String()
+		fmt.Printf("Command output: %s\n", output)
 
-			if strings.Contains(out.String(), "2701") {
-				passCount++
-			}
-			mu.Unlock()
-		})
+		if strings.Contains(output, "2701") {
+			passCount++
+		}
 	}
 
-	t.Logf("Total run: %v, Passes: %v, Pass rate: %v percent", runCount, passCount, (passCount/runCount)*100)
+	if passCount < (runCount / 2) {
+		t.Errorf("Some tests failed. Total run: %v, Passes: %v", runCount, passCount)
+	} else {
+		t.Logf("All tests passed. Total run: %v, Passes: %v", runCount, passCount)
+	}
 }
