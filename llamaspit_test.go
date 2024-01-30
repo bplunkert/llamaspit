@@ -33,8 +33,8 @@ func TestProcessChatResponse(t *testing.T) {
 	}
 
 	if passCount < (runCount / 2) {
-		t.Errorf("Some tests failed. Total run: %v, Passes: %v", runCount, passCount)
+		t.Errorf("More than 50% of tests failed. Total run: %v, Passes: %v", runCount, passCount)
 	} else {
-		t.Logf("All tests passed. Total run: %v, Passes: %v", runCount, passCount)
+		t.Logf("More than 50% of tests passed. Total run: %v, Passes: %v", runCount, passCount)
 	}
 }
