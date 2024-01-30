@@ -35,6 +35,7 @@ func main() {
 		fmt.Println("-y\t\tAutomatically accept and execute the command")
 		fmt.Println("Environment Variables:")
 		fmt.Println("OLLAMA_HOST\tThe URL of the Ollama endpoint, defaults to http://localhost:11434")
+		fmt.Println("OLLAMA_MODEL\tThe name of the Ollama model, defaults to codellama")
 		os.Exit(0)
 	}
 
@@ -55,8 +56,12 @@ func main() {
 	ctx := context.Background()
 
 	stream := false
+	model := os.Getenv("OLLAMA_MODEL")
+	if model == "" {
+		model = "codellama"
+	}
 	req := &api.ChatRequest{
-		Model: "llama2",
+		Model: model,
 		Messages: []api.Message{{
 			Role:    "user",
 			Content: promptContent,
