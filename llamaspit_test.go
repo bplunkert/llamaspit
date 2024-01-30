@@ -1,4 +1,4 @@
-package llamaspit
+package main
 
 import (
 	"bytes"
