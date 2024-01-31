@@ -13,7 +13,8 @@ docker compose run llamaspit <Description of the command you want>
 ```
 Please replace `<Description of the command you want>` with your description of the command to be executed.
 
-### Example use
+### Example usage
+![example usage](example.gif)
 ```
 ./llamaspit multiply 37 by 73
 llamaspit suggests: `echo $((37 * 73))`
